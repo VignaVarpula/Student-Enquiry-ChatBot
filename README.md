@@ -1,1 +1,1 @@
-# Student-Enquiry-ChatBot
+# Student Enquiry ChatBot
