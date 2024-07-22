@@ -1,0 +1,112 @@
+<!--register.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/1.jpg') }}">
+    <style>
+        body {
+            font-family: 'Georgia';
+            background-color: aliceblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .register-container {
+            background-color: #f9f9f9;
+            padding: 50px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
+            text-align: left;
+        }
+
+        input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .register-message {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Sign Up for AVNI</h2>
+        <form id="registerForm">
+            <label for="new-username">Username:</label>
+            <input type="text" id="new-username" name="new-username" required>
+            <label for="new-password">Password:</label>
+            <input type="password" id="new-password" name="new-password" required>
+            <button type="submit">Sign Up</button>
+            <p id="register-message" class="register-message"></p>
+        </form>
+    </div>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const newUsername = document.getElementById('new-username').value;
+            const newPassword = document.getElementById('new-password').value;
+            const registerMessage = document.getElementById('register-message');
+            let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+
+            if (registeredUsers.some(user => user.username === newUsername)) {
+                registerMessage.textContent = "Username already exists. Please choose another.";
+                registerMessage.style.color = "red";
+            } else {
+                registeredUsers.push({ username: newUsername, password: newPassword });
+                localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+                registerMessage.textContent = "Registration successful! Redirecting to Chat Page page...";
+                registerMessage.style.color = "green";
+                setTimeout(() => {
+                    window.location.href = "/chat";
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
