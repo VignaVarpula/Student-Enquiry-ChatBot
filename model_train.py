@@ -96,8 +96,7 @@ def main():
     
     model = Net(input_size, hidden_size, output_size)
     train_model(model, training_data, output_data)
-    
-    # Save the words and labels to use them later
+   
     torch.save({'words': words, 'labels': labels}, "data.pth")
     print("Data saved to data.pth")
 
